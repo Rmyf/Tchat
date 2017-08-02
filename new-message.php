@@ -1,11 +1,19 @@
 <?php
+require_once("classes/Message.php");
+require_once("classes/Database.php");
+
+$db = new Database();
+
 if (empty($_POST['input'])) {
-    http_response_code(400);
-    header('Content-Type: text/plain');
-    echo 'expect a message parameter';
-    exit(1);
-}
-require_once("model/Message.php");
+    
 $msg = new Message($_POST['input']);
+$db->createMessage($msg);
 header('Content-Type: text/plain');
-var_dump($msg);
+echo $msg;
+
+} else {
+
+http_response_code(400);
+header('Content-Type: text/plain');
+echo 'expect a message parameter';
+}
